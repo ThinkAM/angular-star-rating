@@ -38,7 +38,9 @@ const STAR_RATING_CONTROL_ACCESSOR = {
     'id',
   ],
   outputs: ['starClickChange', 'ratingChange', 'hoverRatingChange'],
-  styleUrls: [],
+  styleUrls: [
+    'star-rating-control.component.scss'
+  ],
   templateUrl: 'star-rating-control.component.html',
 })
 export class StarRatingControlComponent

@@ -1,0 +1,379 @@
+<div class="container" [formGroup]="bindingsForm">
+  <div class="row">
+    <div class="col">
+      <h1>Property Bindings</h1>
+      <star-rating [id]="bindingsForm.get('id').value"
+        [rating]="bindingsForm.get('rating').value"
+        [step]="bindingsForm.get('step').value"
+        [showHalfStars]="bindingsForm.get('showHalfStars').value"
+        [numOfStars]="bindingsForm.get('numOfStars').value"
+        [size]="bindingsForm.get('size').value"
+        [space]="bindingsForm.get('space').value"
+        [staticColor]="bindingsForm.get('staticColor').value"
+        [disabled]="bindingsForm.get('disabled').value"
+        [hoverEnabled]="bindingsForm.get('hoverEnabled').value"
+        [starType]="bindingsForm.get('starType').value"
+        [labelText]="bindingsForm.get('labelText').value"
+        [labelPosition]="bindingsForm.get('labelPosition').value"
+        [speed]="bindingsForm.get('speed').value"
+        [direction]="bindingsForm.get('direction').value"
+        [readOnly]="bindingsForm.get('readOnly').value"
+        [getColor]="bindingsForm.get('getColor').value"
+        [getHalfStarVisible]="bindingsForm.get('getHalfStarVisible').value"
+        (onHoverRatingChange)="onHoverRatingChange($event)"
+        (onClick)="onClick($event)" (onRatingChange)="onRatingChange($event)">
+      </star-rating>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <fieldset>
+        <legend id="layout">Layout</legend>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>
+                Label Position: {{bindingsForm.get('labelPosition').value}}
+              </label>
+              <select class="form-control" formControlName="labelPosition">
+                <option [ngValue]="">none</option>
+                <ng-template ngFor let-opt [ngForOf]="labelPositionOptions">
+                  <option [value]="opt">{{opt}}</option>
+                </ng-template>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <star-rating labelText="Label Position"
+              [labelPosition]="bindingsForm.get('labelPosition').value">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>
+                Direction: {{bindingsForm.get('direction').value}}
+              </label>
+              <select class="form-control" formControlName="direction">
+                <option [ngValue]="">none</option>
+                <option [value]="'ltr'">ltr</option>
+                <option [value]="'rtl'">rtl</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <star-rating labelText="Rating: "
+              [direction]="bindingsForm.get('direction').value">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>
+                starType: {{bindingsForm.get('starType').value}}
+              </label>
+              <select class="form-control" formControlName="starType">
+                <option [ngValue]="">none</option>
+                <ng-template ngFor let-opt [ngForOf]="starOptions">
+                  <option [value]="opt">{{opt}}</option>
+                </ng-template>
+              </select>
+            </div>
+          </div>
+
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [starType]="bindingsForm.get('starType').value">
+            </star-rating>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="form-label">Space</label>
+              <select class="form-control" formControlName="space">
+                <option [ngValue]="">none</option>
+                <ng-template ngFor let-opt [ngForOf]="spaceOptions">
+                  <option [value]="opt">{{opt}}</option>
+                </ng-template>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [space]="bindingsForm.get('space').value">
+            </star-rating>
+          </div>
+        </div>
+
+      </fieldset>
+
+      <fieldset>
+        <legend id="dimensions">Dimensions</legend>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>NumOfStars</label>
+              <input type="number" class="form-control" placeholder="NumOfStars"
+                formControlName="numOfStars">
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [numOfStars]="bindingsForm.get('numOfStars').value">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Size:{{bindingsForm.get('size').value}}</label>
+              <select class="form-control" formControlName="size">
+                <option [ngValue]="">none</option>
+                <ng-template ngFor let-opt [ngForOf]="sizeOptions">
+                  <option [value]="opt">{{opt}}</option>
+                </ng-template>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [size]="bindingsForm.get('size').value">
+            </star-rating>
+          </div>
+        </div>
+
+      </fieldset>
+
+      <fieldset>
+
+        <legend id="styling">Styling</legend>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Color: {{bindingsForm.get('staticColor').value}}</label>
+              <select class="form-control" formControlName="staticColor">
+                <option [ngValue]="">none</option>
+                <ng-template ngFor let-opt [ngForOf]="colorOptions">
+                  <option [value]="opt">{{opt}}</option>
+                </ng-template>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [staticColor]="bindingsForm.get('staticColor').value">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>getColor</label>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"
+                    formControlName="useCustomGetColor">
+                  use custom getColor function
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [hoverEnabled]="true"
+              [getColor]="bindingsForm.get('useCustomGetColor').value ? _getColor : false">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Disabled</label>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"
+                    formControlName="disabled">
+                  disabled star rating
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [disabled]="bindingsForm.get('disabled').value">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Speed:
+                {{bindingsForm.get('speed').value}}</label>
+              <select class="form-control" formControlName="speed">
+                <option [ngValue]="">none</option>
+                <ng-template ngFor let-opt [ngForOf]="speedOptions">
+                  <option [value]="opt">{{opt}}</option>
+                </ng-template>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [speed]="bindingsForm.get('speed').value">
+            </star-rating>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend id="other">Other</legend>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Id</label>
+              <input type="text" class="form-control" placeholder="Id"
+                formControlName="id">
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [id]="bindingsForm.get('id').value">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Rating</label>
+              <input type="number" class="form-control" placeholder="rating"
+                step="0.5" formControlName="rating">
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [showHalfStars]="true"
+              [rating]="bindingsForm.get('rating').value">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>ShowHalfStars</label>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"
+                    formControlName="showHalfStars">
+                  showHalfStars
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [rating]="3.5"
+              [showHalfStars]="bindingsForm.get('showHalfStars').value">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>hoverEnabled</label>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"
+                    formControlName="showHoverStars">
+                  showHoverStars
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating
+              [hoverEnabled]="bindingsForm.get('showHoverStars').value">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Get Half Star Visible</label>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"
+                    formControlName="useCustomGetHalfStarVisible">
+                  use custom getHalfStarVisible function
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [rating]="2.2" [showHalfStars]="true"
+              [getHalfStarVisible]="bindingsForm.get('useCustomGetHalfStarVisible').value ? _getHalfStarVisible : false">
+            </star-rating>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Read Only</label>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"
+                    formControlName="readOnly">
+                  ReadOnly
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [readOnly]="bindingsForm.get('readOnly').value">
+            </star-rating>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Label Text</label>
+              <input type="text" class="form-control" placeholder=":Label text"
+                formControlName="labelText">
+            </div>
+          </div>
+          <div class="col">
+            <label>&nbsp;</label>
+            <star-rating [labelText]="bindingsForm.get('labelText').value">
+            </star-rating>
+          </div>
+        </div>
+      </fieldset>
+
+    </div>
+  </div>
+
+</div>

@@ -17,5 +17,5 @@
     "defaultCollection": "@nrwl/angular"
   },
   "generators": {},
-  "defaultProject": "demos"
+  "defaultProject": "embedded"
 }

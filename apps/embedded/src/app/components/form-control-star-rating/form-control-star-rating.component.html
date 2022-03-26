@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="col content">
+            <h3>Deixe uma avaliação</h3>
+            <h1>{{rating}}</h1>
+            <form [formGroup]="form" (submit)="onSubmit()">
+                <star-rating-control [rating]="rating" size="large" formControlName="ratingInput"></star-rating-control>
+                <h5 *ngIf="ratings.length > 1">{{ratings.length}} avaliações</h5>
+                <h5 *ngIf="ratings.length === 1">{{ratings.length}} avaliação</h5>
+
+                <div class="comments">
+                    <span class="counter" *ngIf="comments.length > 1">{{comments.length}} Comentários</span>
+                    <span class="counter" *ngIf="comments.length === 1">{{comments.length}} Comentário</span>
+                </div>
+
+                <div class="stock-inventory__buttons">
+                    <button type="submit" [disabled]="form.invalid">Submit</button>
+                </div>
+                <pre>{{ form.value | json }}</pre>
+            </form>
+        </div>
+    </div>
+</div>

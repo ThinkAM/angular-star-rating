@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "908a2aed-6db7-4336-9f06-9ac6062118bf"
+  },
   "version": 1,
   "newProjectRoot": "",
   "projects": {
@@ -27,26 +30,26 @@
         }
       }
     },
-    "demos": {
-      "root": "apps/demos",
-      "sourceRoot": "apps/demos/src",
+    "embedded": {
+      "root": "apps/embedded",
+      "sourceRoot": "apps/embedded/src",
       "projectType": "application",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/demos",
-            "index": "apps/demos/src/index.html",
-            "main": "apps/demos/src/main.ts",
-            "polyfills": "apps/demos/src/polyfills.ts",
-            "tsConfig": "apps/demos/tsconfig.app.json",
+            "outputPath": "dist/apps/embedded",
+            "index": "apps/embedded/src/index.html",
+            "main": "apps/embedded/src/main.ts",
+            "polyfills": "apps/embedded/src/polyfills.ts",
+            "tsConfig": "apps/embedded/tsconfig.app.json",
             "assets": [
-              "apps/demos/src/favicon.ico",
-              "apps/demos/src/assets",
-              "apps/demos/src/assets/images",
-              "apps/demos/src/assets/fontawesome"
+              "apps/embedded/src/favicon.ico",
+              "apps/embedded/src/assets",
+              "apps/embedded/src/assets/images",
+              "apps/embedded/src/assets/fontawesome"
             ],
-            "styles": ["apps/demos/src/styles.scss"],
+            "styles": ["apps/embedded/src/styles.scss"],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -66,8 +69,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "apps/demos/src/environments/environment.ts",
-                  "with": "apps/demos/src/environments/environment.prod.ts"
+                  "replace": "apps/embedded/src/environments/environment.ts",
+                  "with": "apps/embedded/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -88,8 +91,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "apps/demos/src/environments/environment.ts",
-                  "with": "apps/demos/src/environments/environment.prod.ts"
+                  "replace": "apps/embedded/src/environments/environment.ts",
+                  "with": "apps/embedded/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -128,40 +131,40 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "demos:build"
+            "browserTarget": "embedded:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "demos:build:production"
+              "browserTarget": "embedded:build:production"
             },
             "test": {
-              "browserTarget": "demos:build:test"
+              "browserTarget": "embedded:build:test"
             },
             "development": {
-              "browserTarget": "demos:build:development"
+              "browserTarget": "embedded:build:development"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "demos:build"
+            "browserTarget": "embedded:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "apps/demos/src/test.ts",
-            "polyfills": "apps/demos/src/polyfills.ts",
-            "tsConfig": "apps/demos/tsconfig.spec.json",
-            "karmaConfig": "apps/demos/karma.conf.js",
+            "main": "apps/embedded/src/test.ts",
+            "polyfills": "apps/embedded/src/polyfills.ts",
+            "tsConfig": "apps/embedded/tsconfig.spec.json",
+            "karmaConfig": "apps/embedded/karma.conf.js",
             "codeCoverage": true,
             "browsers": "ChromeHeadlessNoSandbox",
-            "styles": ["apps/demos/src/styles.scss"],
+            "styles": ["apps/embedded/src/styles.scss"],
             "scripts": [],
             "assets": [
-              "apps/demos/src/favicon.ico",
-              "apps/demos/src/assets"
+              "apps/embedded/src/favicon.ico",
+              "apps/embedded/src/assets"
             ]
           }
         },
@@ -169,8 +172,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/demos/**/*.ts",
-              "apps/demos/**/*.html"
+              "apps/embedded/**/*.ts",
+              "apps/embedded/**/*.html"
             ]
           }
         }

@@ -1,0 +1,19 @@
+.container {
+    .content {
+        text-align: center;
+        .comments {
+            border: solid #f1f1f1 2px;
+            height: 300px;
+            margin-top: 36px;
+            padding-top: 12px;
+            padding-left: 24px;
+            border-radius: 8px;
+            text-align: left;
+            .counter {
+                font-size: 1.3em;
+                font-weight: 700;
+                color: gray;
+            }
+        }
+    }
+}

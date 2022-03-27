@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ClientService } from 'apps/embedded/src/services/client.service';
 
 @Component({
   selector: 'app-form-test',
@@ -18,12 +19,13 @@ export class FormControlStarRatingComponent {
   ratings = [];
   comments = [];
 
-  constructor(private fb: FormBuilder) {
-    setTimeout(() => {
+  constructor(private fb: FormBuilder, private clientService: ClientService) {
+    this.clientService.getClientIPAddress().subscribe((response) => {
+      this.form.get('ip').setValue(response.ip);
       this.rating = 2.7;
       this.ratings.push(this.rating);
       this.comments.push('Muito bom!');
-    }, 2000);
+    });
   }
 
   onSubmit() {

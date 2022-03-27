@@ -11,6 +11,7 @@ import { PropertyBindingsComponent } from './components/property-bindings/proper
 import { StaticModuleModule } from './static-module/static-module.module';
 import { CustomStyleComponent } from './components/custom-style/custom-style.component';
 import { CustomStarsComponent } from './components/custom-stars/custom-stars.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const DECLARATIONS = [
   AppComponent,
@@ -22,6 +23,7 @@ const DECLARATIONS = [
 ];
 @NgModule({
   imports: [
+    HttpClientModule,
     BrowserModule,
     ReactiveFormsModule,
     StarRatingModule.forRoot(),

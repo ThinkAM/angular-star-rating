@@ -15,8 +15,15 @@
                         <label>{{countUserOnline}} ONLINE</label>
                         <fa-icon [icon]="faCircle"></fa-icon>
                     </div>
+                    <div class="sort">
+                        <select name="sort-by" id="sort-by">
+                            <option value="best">Melhor</option>
+                            <option value="recent">Recente</option>
+                            <option value="old">Antigo</option>
+                        </select>
+                        <img src="https://img.icons8.com/material-two-tone/24/000000/give-way.png" width="12" height="8">
+                    </div>
                 </div>
-
 
                 <div class="stock-inventory__buttons">
                     <button type="submit" [disabled]="form.invalid">Submit</button>

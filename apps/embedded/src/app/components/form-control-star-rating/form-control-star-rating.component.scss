@@ -7,7 +7,7 @@
             width: 100%;
             margin-top: 36px;
             padding-top: 12px;
-            padding-left: 24px;
+            padding-left: 6px;
             border-radius: 8px;
             text-align: left;
             position: relative;
@@ -20,7 +20,7 @@
                 float: left;
             }
             .count-user-online {
-                margin-left: 12px;
+                margin-left: 6px;
                 position: relative;
                 float: left;
                 font-size: 0.700em;
@@ -41,6 +41,30 @@
                     font-size: 0.600em;                    
                     position: relative;
                     float: right;
+                }
+            }
+            .sort {
+                float: right;
+                margin-right: 9px;
+                position: relative;
+                width: 70px;
+
+                select {
+                    border: none;
+                    -webkit-appearance: none;
+                    z-index: 1;
+                    position: fixed;
+                    background-color: transparent;
+                    width: 74px;
+                    font-size: 0.900em;
+                    padding-left: 4px;
+                    color: gray;
+                }
+                img {
+                    z-index: 0;
+                    position: fixed;
+                    margin-left: 56px;
+                    margin-top: 9px;
                 }
             }
         }

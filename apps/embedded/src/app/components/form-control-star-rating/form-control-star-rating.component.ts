@@ -29,11 +29,7 @@ export class FormControlStarRatingComponent {
   faCircle = faCircle;
 
   constructor(private fb: FormBuilder, private clientService: ClientService) {
-    this.clientService.getClientIPAddress().subscribe((response) => {
-      this.form.get('ip').setValue(response.ip);
-      this.form.get('url').setValue(location.href);
-      this.comments.push('Muito bom!');
-    });
+    this.init();
   }
 
   get ratingInput() {
@@ -42,6 +38,13 @@ export class FormControlStarRatingComponent {
 
   get commentInput() {
     return this.form.get('commentInput').value;
+  }
+
+  init() {
+    this.clientService.getClientIPAddress().subscribe((response) => {
+      this.form.get('ip').setValue(response.ip);
+      this.form.get('url').setValue(location.href);
+    });
   }
 
   humanize = (rating: string) => rating.includes('.00') ? Number(rating) : rating;
@@ -60,11 +63,12 @@ export class FormControlStarRatingComponent {
         average: this.rating
       });
 
-      if (this.commentInput)
+      if (this.commentInput && this.commentInput !== '')
         this.comments.push(this.commentInput);
 
       console.log('Inserted:', this.form.value);
       this.form.reset();
+      this.init();
       return;
     }
 
@@ -74,10 +78,11 @@ export class FormControlStarRatingComponent {
     rating.average = this.rating;
     this.ratings[index] = rating;
 
-    if (this.commentInput)
+    if (this.commentInput && this.commentInput !== '')
       this.comments.push(this.commentInput);
 
     console.log('Updated:', this.form.value);
+    this.init();
     this.form.reset();
   }
 }

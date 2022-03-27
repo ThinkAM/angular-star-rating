@@ -68,7 +68,10 @@
                 }
             }
             .comment {
-                margin-top: 48px;
+                position: relative;
+                float: left;
+                width: 100%;
+                margin-top: 12px;
                 height: auto;
                 text-align: left;
                 textarea {
@@ -77,6 +80,57 @@
                     padding: 9px;
                 }
             }
+            .user-auth-actions {
+                position: relative;
+                float: right;
+                font-size: 0.700em;
+                font-weight: 500;
+                height: 150px;
+                margin-top: 75px;
+                text-align: center;
+                a {
+                    color: var(--primary-color);
+                    margin-right: 8px;
+                    cursor: pointer;
+                }
+            }
         }
+    }
+}
+
+@media (max-width: 400px)
+{
+    textarea {
+        width: 170px;
+    }
+}
+@media (min-width: 401px) and (max-width: 700px)
+{
+    textarea {
+        width: 350px;
+    }
+}
+@media (min-width: 701px) and (max-width: 900px)
+{
+    textarea {
+        width: 550px;
+    }
+}
+@media (min-width: 901px) and (max-width: 1000px)
+{
+    textarea {
+        width: 750px;
+    }
+}
+@media (min-width: 1001px) and (max-width: 1200px)
+{
+    textarea {
+        width: 780px;
+    }
+}
+@media (min-width: 1201px)
+{
+    textarea {
+        width: 950px;
     }
 }

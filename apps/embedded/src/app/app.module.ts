@@ -12,6 +12,7 @@ import { StaticModuleModule } from './static-module/static-module.module';
 import { CustomStyleComponent } from './components/custom-style/custom-style.component';
 import { CustomStarsComponent } from './components/custom-stars/custom-stars.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const DECLARATIONS = [
   AppComponent,
@@ -28,6 +29,7 @@ const DECLARATIONS = [
     ReactiveFormsModule,
     StarRatingModule.forRoot(),
     StaticModuleModule,
+    FontAwesomeModule,
     RouterModule.forRoot(
       [
         {

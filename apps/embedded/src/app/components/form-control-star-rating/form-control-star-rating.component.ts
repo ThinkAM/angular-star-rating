@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ClientService } from 'apps/embedded/src/services/client.service';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-form-test',
@@ -15,14 +16,24 @@ export class FormControlStarRatingComponent {
     ip: new FormControl('')
   });
 
-  rating = 0;
-  ratings = [];
+  rating = 4;
+  ratings = [{
+    rating: this.rating,
+    ip: "0.0.0.0",
+    url: "http://localhost:4200/#/form-control",
+    sum: 4,
+    average: 4
+  }];
   comments = [];
+  countUserOnline = 1;
+  faCircle = faCircle;
 
   constructor(private fb: FormBuilder, private clientService: ClientService) {
     this.clientService.getClientIPAddress().subscribe((response) => {
       this.form.get('ip').setValue(response.ip);
       this.form.get('url').setValue(location.href);
+      this.comments.push('Muito bom!');
+      this.comments.push('Excelente!');
     });
   }
 

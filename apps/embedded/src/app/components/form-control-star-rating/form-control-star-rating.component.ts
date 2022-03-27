@@ -22,15 +22,37 @@ export class FormControlStarRatingComponent {
   constructor(private fb: FormBuilder, private clientService: ClientService) {
     this.clientService.getClientIPAddress().subscribe((response) => {
       this.form.get('ip').setValue(response.ip);
-      this.rating = 2.7;
-      this.ratings.push(this.rating);
-      this.comments.push('Muito bom!');
+      this.form.get('url').setValue(location.href);
     });
   }
 
+  get ratingInput() {
+    return this.form.get('ratingInput').value;
+  }
+
   onSubmit() {
-    this.ratings.push(this.rating);
-    this.form.get('url').setValue(location.href);
-    console.log('Submitted value:', this.form.value);
+    const rating = this.ratings.find(prop => prop.ip === this.form.get('ip').value && prop.url === location.href);
+    this.ratings = this.ratings.filter(props => props != rating);
+    if (!rating || !this.ratings.length) {
+      const sum = this.ratings.length > 0 ? this.ratings[this.ratings.length - 1].sum + this.ratingInput : this.ratingInput;
+      this.rating = sum / (this.ratings.length + 1);
+      this.ratings.push({
+        rating: this.ratingInput,
+        ip: this.form.get('ip').value,
+        url: location.href,
+        sum: sum,
+        average: this.rating
+      });
+      
+      console.log('Inserted:', this.form.value);
+      return;
+    }
+    
+    const index = this.ratings.findIndex(prop => prop.ip === this.form.get('ip').value && prop.url === location.href);
+    const sum = this.ratings.length > 0 ? this.ratings[this.ratings.length - 1].sum + this.ratingInput : this.ratingInput;
+    this.rating = sum / (this.ratings.length + 1);
+    rating.average = this.rating;
+    this.ratings[index] = rating;
+    console.log('Updated:', this.form.value);
   }
 }

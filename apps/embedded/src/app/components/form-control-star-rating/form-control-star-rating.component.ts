@@ -11,9 +11,9 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 export class FormControlStarRatingComponent {
   form = new FormGroup({
     ratingInput: new FormControl(''),
-    comment: new FormControl(''),
+    commentInput: new FormControl(''),
     url: new FormControl(''),
-    ip: new FormControl('')
+    ip: new FormControl(''),
   });
 
   rating = 4;
@@ -33,13 +33,18 @@ export class FormControlStarRatingComponent {
       this.form.get('ip').setValue(response.ip);
       this.form.get('url').setValue(location.href);
       this.comments.push('Muito bom!');
-      this.comments.push('Excelente!');
     });
   }
 
   get ratingInput() {
     return this.form.get('ratingInput').value;
   }
+
+  get commentInput() {
+    return this.form.get('commentInput').value;
+  }
+
+  humanize = (rating: string) => rating.includes('.00') ? Number(rating) : rating;
 
   onSubmit() {
     const rating = this.ratings.find(prop => prop.ip === this.form.get('ip').value && prop.url === location.href);
@@ -54,16 +59,25 @@ export class FormControlStarRatingComponent {
         sum: sum,
         average: this.rating
       });
-      
+
+      if (this.commentInput)
+        this.comments.push(this.commentInput);
+
       console.log('Inserted:', this.form.value);
+      this.form.reset();
       return;
     }
-    
+
     const index = this.ratings.findIndex(prop => prop.ip === this.form.get('ip').value && prop.url === location.href);
     const sum = this.ratings.length > 0 ? this.ratings[this.ratings.length - 1].sum + this.ratingInput : this.ratingInput;
     this.rating = sum / (this.ratings.length + 1);
     rating.average = this.rating;
     this.ratings[index] = rating;
+
+    if (this.commentInput)
+      this.comments.push(this.commentInput);
+
     console.log('Updated:', this.form.value);
+    this.form.reset();
   }
 }

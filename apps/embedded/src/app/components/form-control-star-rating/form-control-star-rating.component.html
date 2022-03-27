@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col content">
             <h3>Deixe uma avaliação</h3>
-            <h1>{{rating}}</h1>
-            <form [formGroup]="form" (submit)="onSubmit()">
+            <h1>{{humanize(rating.toFixed(2).toString())}}</h1>
+            <form id="userform" [formGroup]="form" (submit)="onSubmit()">
                 <star-rating-control [rating]="rating" size="large" formControlName="ratingInput"></star-rating-control>
                 <h5 *ngIf="ratings.length > 1">{{ratings.length}} avaliações</h5>
                 <h5 *ngIf="ratings.length === 1">{{ratings.length}} avaliação</h5>
@@ -22,6 +22,10 @@
                             <option value="old">Antigo</option>
                         </select>
                         <img src="https://img.icons8.com/material-two-tone/24/000000/give-way.png" width="12" height="8">
+                    </div>
+
+                    <div class="comment">
+                        <textarea formControlName="commentInput" placeholder="Escreva seu comentário..." rows="4" cols="50" name="comment" form="userform"></textarea>
                     </div>
                 </div>
 

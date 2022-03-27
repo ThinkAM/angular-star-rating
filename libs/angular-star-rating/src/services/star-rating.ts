@@ -340,7 +340,8 @@ export class StarRating {
     this._rating = newRating;
 
     //update ratingAsInteger. rating parsed to int for the value-[n] modifier
-    this.ratingAsInteger = parseInt(this._rating.toString(), 10);
+    if (this._rating)
+      this.ratingAsInteger = parseInt(this._rating.toString(), 10);
 
     //update halfStarsVisible
     this.setHalfStarVisible();

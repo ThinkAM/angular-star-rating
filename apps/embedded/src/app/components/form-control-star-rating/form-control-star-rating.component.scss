@@ -67,6 +67,16 @@
                     margin-top: 9px;
                 }
             }
+            .comment {
+                margin-top: 48px;
+                height: auto;
+                text-align: left;
+                textarea {
+                    border-radius: 8px;
+                    border: solid #f1f1f1 2px;
+                    padding: 9px;
+                }
+            }
         }
     }
 }

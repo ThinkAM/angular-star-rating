@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ClientService } from 'apps/embedded/src/services/client.service';
 import { faCircle, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { ActivatedRoute } from '@angular/router';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 @Component({
   selector: 'app-form-test',
   templateUrl: 'form-control-star-rating.component.html',
   styleUrls: ['./form-control-star-rating.component.scss'],
 })
-export class FormControlStarRatingComponent {
+export class FormControlStarRatingComponent implements OnInit {
   form = new FormGroup({
     ratingInput: new FormControl(''),
     commentInput: new FormControl(''),
@@ -33,8 +36,29 @@ export class FormControlStarRatingComponent {
   debug = false;
   commentsFeature = false;
 
-  constructor(private fb: FormBuilder, private clientService: ClientService) {
+  constructor(
+      private fb: FormBuilder,
+      private clientService: ClientService,
+      private router: ActivatedRoute
+  ) {
     this.init();
+  }
+
+  ngOnInit(): void {
+    this.router.queryParams.subscribe(params => {
+      console.log(params);
+      const firebaseConfig = {
+        apiKey: params.apiKey,
+        authDomain: params.authDomain,
+        projectId: params.projectId,
+        storageBucket: params.storageBucket,
+        messagingSenderId: params.messagingSenderId,
+        appId: params.appId,
+        measurementId: params.measurementId
+      };
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    });
   }
 
   get ratingInput() {

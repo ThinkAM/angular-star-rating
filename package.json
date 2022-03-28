@@ -72,6 +72,7 @@
     "firebase": "^9.6.10",
     "fontawesome": "^4.7.2",
     "ngrx-store-freeze": "^0.2.1",
+    "ngx-airtable": "^2.0.1-next.0",
     "rxjs": "^6.6.7",
     "rxjs-compat": "^6.0.0-rc.0",
     "tslib": "^2.3.1",

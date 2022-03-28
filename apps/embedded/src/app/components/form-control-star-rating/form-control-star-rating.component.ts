@@ -5,6 +5,7 @@ import { faCircle, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-
 import { ActivatedRoute } from '@angular/router';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { AirtableService } from 'apps/embedded/src/services/airtable.service';
 
 @Component({
   selector: 'app-form-test',
@@ -19,14 +20,8 @@ export class FormControlStarRatingComponent implements OnInit {
     ip: new FormControl(''),
   });
 
-  rating = 4;
-  ratings = [{
-    rating: this.rating,
-    ip: "0.0.0.0",
-    url: "http://localhost:4200/#/form-control",
-    sum: 4,
-    average: 4
-  }];
+  rating = 0;
+  ratings = [];
   comments = [];
   countUserOnline = 1;
   faCircle = faCircle;
@@ -35,29 +30,38 @@ export class FormControlStarRatingComponent implements OnInit {
   logged = true;
   debug = false;
   commentsFeature = false;
+  id: string;
+  entityName = 'Ratings';
 
   constructor(
-      private fb: FormBuilder,
-      private clientService: ClientService,
-      private router: ActivatedRoute
-  ) {
-    this.init();
-  }
+    private fb: FormBuilder,
+    private clientService: ClientService,
+    private router: ActivatedRoute,
+    private airtableService: AirtableService
+  ) { }
 
   ngOnInit(): void {
     this.router.queryParams.subscribe(params => {
-      console.log(params);
-      const firebaseConfig = {
-        apiKey: params.apiKey,
-        authDomain: params.authDomain,
-        projectId: params.projectId,
-        storageBucket: params.storageBucket,
-        messagingSenderId: params.messagingSenderId,
-        appId: params.appId,
-        measurementId: params.measurementId
-      };
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
+      if (params?.apiKey) {
+        console.log(params);
+        const firebaseConfig = {
+          apiKey: params.apiKey,
+          authDomain: params.authDomain,
+          projectId: params.projectId,
+          storageBucket: params.storageBucket,
+          messagingSenderId: params.messagingSenderId,
+          appId: params.appId,
+          measurementId: params.measurementId
+        };
+        const app = initializeApp(firebaseConfig);
+        getAnalytics(app);
+        this.airtableService.configure({
+          apiKey: params.airtableApiKey,
+          apiVersion: 0
+        });
+        this.airtableService.base(params.baseId);
+        this.init();
+      }
     });
   }
 
@@ -69,49 +73,85 @@ export class FormControlStarRatingComponent implements OnInit {
     return this.form.get('commentInput').value;
   }
 
+  get url() {
+    return this.form.get('url').value;
+  }
+
+  get ip() {
+    return this.form.get('ip').value;
+  }
+
   init() {
     this.clientService.getClientIPAddress().subscribe((response) => {
       this.form.get('ip').setValue(response.ip);
       this.form.get('url').setValue(location.href);
+      this.airtableService.getList(this.entityName, `AND(url='${this.url}', ip='${this.ip}')`, {
+        field: 'ip',
+        direction: 'asc'
+      }).then((response: any) => {
+        if (response.length) {
+          this.id = response[0].id;
+        }
+      });
+      this.airtableService.getAll(this.entityName, {
+        field: 'createdTime',
+        direction: 'desc'
+      }).then((response: any) => {
+        if (response.length) {
+          this.ratings = response.map(item => item.fields);
+          this.rating = this.ratings[0].average;
+        }
+      });
     });
   }
 
   humanize = (rating: string) => rating.includes('.00') ? Number(rating) : rating;
 
-  onSubmit() {
-    const rating = this.ratings.find(prop => prop.ip === this.form.get('ip').value && prop.url === location.href);
-    this.ratings = this.ratings.filter(props => props != rating);
-    if (!rating || !this.ratings.length) {
-      const sum = this.ratings.length > 0 ? this.ratings[this.ratings.length - 1].sum + this.ratingInput : this.ratingInput;
+  async onSubmit() {
+    if (!this.id) {
+      this.ratings = this.ratings.filter(prop => prop.ip !== this.ip && prop.url !== this.url);
+      const sum = this.ratings.length > 0 ? (Number(this.ratings[this.ratings.length - 1].sum) + Number(this.ratingInput)) + this.ratingInput : this.ratingInput;
       this.rating = sum / (this.ratings.length + 1);
-      this.ratings.push({
+      const fields = {
         rating: this.ratingInput,
-        ip: this.form.get('ip').value,
-        url: location.href,
-        sum: sum,
-        average: this.rating
-      });
+        ip: this.ip,
+        url: this.url,
+        average: this.rating,
+        createdTime: new Date(),
+        sum: String(sum)
+      };
+      this.ratings.push(fields);
 
       if (this.commentInput && this.commentInput !== '')
         this.comments.push(this.commentInput);
 
-      console.log('Inserted:', this.form.value);
-      this.form.reset();
+      const response: any = await this.airtableService.add(this.entityName, fields);
+      console.log(response);
+      this.id = response.id;
+
+      this.rating = 0;
       this.init();
-      return;
     }
 
-    const index = this.ratings.findIndex(prop => prop.ip === this.form.get('ip').value && prop.url === location.href);
+    this.ratings = this.ratings.filter(prop => prop.ip !== this.ip && prop.url !== this.url);
     const sum = this.ratings.length > 0 ? this.ratings[this.ratings.length - 1].sum + this.ratingInput : this.ratingInput;
     this.rating = sum / (this.ratings.length + 1);
-    rating.average = this.rating;
-    this.ratings[index] = rating;
+
+    const response = await this.airtableService.update(this.entityName, {
+      rating: this.ratingInput,
+      ip: this.ip,
+      url: this.url,
+      average: this.rating,
+      createdTime: new Date(),
+      sum: String(sum)
+    }, this.id);
+
+    console.log(response);
 
     if (this.commentInput && this.commentInput !== '')
       this.comments.push(this.commentInput);
 
-    console.log('Updated:', this.form.value);
-    this.form.reset();
+    this.rating = 0;
     this.init();
   }
 }

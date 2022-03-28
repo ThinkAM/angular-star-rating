@@ -43,7 +43,6 @@ export class FormControlStarRatingComponent implements OnInit {
   ngOnInit(): void {
     this.router.queryParams.subscribe(params => {
       if (params?.apiKey) {
-        console.log(params);
         const firebaseConfig = {
           apiKey: params.apiKey,
           authDomain: params.authDomain,
@@ -91,15 +90,17 @@ export class FormControlStarRatingComponent implements OnInit {
       }).then((response: any) => {
         if (response.length) {
           this.id = response[0].id;
+          this.rating = response[0].fields.average;
         }
       });
-      this.airtableService.getAll(this.entityName, {
+      this.airtableService.getList(this.entityName, `url='${this.url}'`, 
+      {
         field: 'createdTime',
         direction: 'desc'
       }).then((response: any) => {
         if (response.length) {
           this.ratings = response.map(item => item.fields);
-          this.rating = this.ratings[0].average;
+          this.rating = this.ratings.length ? this.ratings[0].average : 0;
         }
       });
     });
@@ -109,14 +110,13 @@ export class FormControlStarRatingComponent implements OnInit {
 
   async onSubmit() {
     if (!this.id) {
-      this.ratings = this.ratings.filter(prop => prop.ip !== this.ip && prop.url !== this.url);
-      const sum = this.ratings.length > 0 ? (Number(this.ratings[this.ratings.length - 1].sum) + Number(this.ratingInput)) + this.ratingInput : this.ratingInput;
-      this.rating = sum / (this.ratings.length + 1);
+      const sum = this.ratings.length > 0 ? this.calculeSum() : this.ratingInput;
+      this.rating = Math.round(sum / (this.ratings.length + 1));
       const fields = {
         rating: this.ratingInput,
         ip: this.ip,
         url: this.url,
-        average: this.rating,
+        average: Math.round(this.rating),
         createdTime: new Date(),
         sum: String(sum)
       };
@@ -126,32 +126,35 @@ export class FormControlStarRatingComponent implements OnInit {
         this.comments.push(this.commentInput);
 
       const response: any = await this.airtableService.add(this.entityName, fields);
-      console.log(response);
       this.id = response.id;
 
-      this.rating = 0;
       this.init();
+      return;
     }
 
-    this.ratings = this.ratings.filter(prop => prop.ip !== this.ip && prop.url !== this.url);
-    const sum = this.ratings.length > 0 ? this.ratings[this.ratings.length - 1].sum + this.ratingInput : this.ratingInput;
-    this.rating = sum / (this.ratings.length + 1);
+    const sum = this.ratings.length > 0 ? this.calculeSum() : this.ratingInput;
+    this.rating = Math.round(sum / (this.ratings.length + 1));
 
-    const response = await this.airtableService.update(this.entityName, {
+    await this.airtableService.update(this.entityName, {
       rating: this.ratingInput,
       ip: this.ip,
       url: this.url,
-      average: this.rating,
+      average: Math.round(this.rating),
       createdTime: new Date(),
       sum: String(sum)
     }, this.id);
 
-    console.log(response);
-
     if (this.commentInput && this.commentInput !== '')
       this.comments.push(this.commentInput);
 
-    this.rating = 0;
     this.init();
+  }
+
+  calculeSum() {
+    let sum = 0;
+    this.ratings.forEach(item => {
+      sum = sum + item.rating;
+    });
+    return sum + this.rating;
   }
 }

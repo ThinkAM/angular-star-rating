@@ -155,6 +155,6 @@ export class FormControlStarRatingComponent implements OnInit {
     this.ratings.forEach(item => {
       sum = sum + item.rating;
     });
-    return sum + this.rating;
+    return sum + this.ratingInput;
   }
 }

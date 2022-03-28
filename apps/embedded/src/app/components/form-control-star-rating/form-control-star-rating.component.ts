@@ -29,8 +29,9 @@ export class FormControlStarRatingComponent {
   faCircle = faCircle;
   faThumbsUp = faThumbsUp;
   faThumbsDown = faThumbsDown;
-  logged = false;
+  logged = true;
   debug = false;
+  commentsFeature = false;
 
   constructor(private fb: FormBuilder, private clientService: ClientService) {
     this.init();

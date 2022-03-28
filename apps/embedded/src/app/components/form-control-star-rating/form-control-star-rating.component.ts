@@ -152,7 +152,8 @@ export class FormControlStarRatingComponent implements OnInit {
 
   calculeSum() {
     let sum = 0;
-    this.ratings.forEach(item => {
+    const otherRatings = this.ratings.filter(prop => prop.ip !== this.ip);
+    otherRatings.forEach(item => {
       sum = sum + item.rating;
     });
     return sum + this.ratingInput;

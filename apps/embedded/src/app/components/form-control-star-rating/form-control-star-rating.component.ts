@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ClientService } from 'apps/embedded/src/services/client.service';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-form-test',
@@ -27,6 +27,10 @@ export class FormControlStarRatingComponent {
   comments = [];
   countUserOnline = 1;
   faCircle = faCircle;
+  faThumbsUp = faThumbsUp;
+  faThumbsDown = faThumbsDown;
+  logged = false;
+  debug = false;
 
   constructor(private fb: FormBuilder, private clientService: ClientService) {
     this.init();
@@ -82,7 +86,7 @@ export class FormControlStarRatingComponent {
       this.comments.push(this.commentInput);
 
     console.log('Updated:', this.form.value);
-    this.init();
     this.form.reset();
+    this.init();
   }
 }

@@ -72,7 +72,7 @@
                 float: left;
                 width: 100%;
                 margin-top: 12px;
-                height: auto;
+                height: 130px;
                 text-align: left;
                 textarea {
                     border-radius: 8px;
@@ -86,12 +86,76 @@
                 font-size: 0.700em;
                 font-weight: 500;
                 height: 150px;
-                margin-top: 75px;
+                margin-top: 45px;
                 text-align: center;
                 a {
                     color: var(--primary-color);
                     margin-right: 8px;
                     cursor: pointer;
+                }
+            }
+            .users-comments {
+                .user-comment {
+                    font-size: 0.7em;
+                    position: relative;
+                    float: left;
+                    border-radius: 8px;
+                    border: solid #f1f1f1 2px;
+                    padding: 9px;
+                    width: 99%;
+
+                    .avatar {
+                        width: 40px;
+                        margin-right: 5px;
+                        margin-left: 12px;
+                        position: relative;
+                        float: left;
+                        height: 40px;
+                        border: solid var(--primary-color) 1px;
+                        text-align: center;
+                        border-radius: 50%;
+                        line-height: 38px;
+                        font-size: 1.5em;
+                        color: #fff;
+                        background-color: var(--primary-color);
+                    }
+                    .info {
+                        position: relative;
+                        float: left;
+                        width: 70%;
+                        span {
+                            margin-left: 5px;
+                            color: gray;
+                            font-weight: 500;
+                        }
+                    }
+                    .description {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        padding-left: 60px;
+                        margin-top: -20px;
+                    }
+                    .actions {
+                        position: relative;
+                        width: 100%;
+                        padding-left: 60px;
+                        a {
+                            margin-right: 12px;
+                            color: var(--primary-color);
+                            font-weight: 500;
+                            cursor: pointer;
+                        }
+                        .left {
+                            float: left;
+                        }
+                        .right {
+                            float: right;
+                            fa-icon {
+                                margin-right: 3px;
+                            }
+                        }
+                    }
                 }
             }
         }

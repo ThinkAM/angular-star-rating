@@ -1,6 +1,6 @@
 {
   "name": "angular-star-rating-workspace",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -10,6 +10,7 @@
     "build:lib": "ng-packagr -p libs/angular-star-rating/package.json && npm run copy:lib-assets && npm run copy:assets",
     "build:packaged": "ng build --app=angular5-example-packaged",
     "build:github-page": "ng build --prod --output-path docs --base-href /angular-star-rating/",
+    "build:embedded-page": "ng build --prod --output-path docs --base-href /angular-star-rating/",
     "copy:lib-assets": "copyfiles -u 3 ./libs/angular-star-rating/src/assets/**/* ./@packaged/angular-star-rating",
     "copy:assets": "copyfiles -u 0 README.md ./@packaged/angular-star-rating && copyfiles -u 0 ./LICENSE.txt ./@packaged/angular-star-rating && copyfiles -u 0 ./CHANGELOG.md ./@packaged/angular-star-rating",
     "test": "ng test",
@@ -55,6 +56,9 @@
     "@angular/platform-browser": "13.0.0",
     "@angular/platform-browser-dynamic": "13.0.0",
     "@angular/router": "13.0.0",
+    "@fortawesome/angular-fontawesome": "^0.10.2",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@ngrx/effects": "13.0.1",
     "@ngrx/router-store": "13.0.1",
     "@ngrx/store": "13.0.1",
@@ -65,8 +69,10 @@
     "bootstrap": "^4.0.0",
     "core-js": "3.8.3",
     "css-star-rating": "^1.3.0",
+    "firebase": "^9.6.10",
     "fontawesome": "^4.7.2",
     "ngrx-store-freeze": "^0.2.1",
+    "ngx-airtable": "^2.0.1-next.0",
     "rxjs": "^6.6.7",
     "rxjs-compat": "^6.0.0-rc.0",
     "tslib": "^2.3.1",
@@ -109,5 +115,10 @@
     "ts-node": "9.1.1",
     "tslint": "~6.1.0",
     "typescript": "4.4.4"
-  }
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "IE 10"
+  ]
 }

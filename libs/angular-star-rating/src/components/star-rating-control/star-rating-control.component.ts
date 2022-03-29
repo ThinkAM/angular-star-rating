@@ -161,7 +161,8 @@ export class StarRatingControlComponent
       return;
     }
 
-    this.hoverRating = rating ? parseInt(rating.toString(), 10) : 0;
+    if (rating)
+      this.hoverRating = rating ? parseInt(rating.toString(), 10) : 0;
 
     //fire onHoverRatingChange event
     const $event: HoverRatingChangeEvent = { hoverRating: this.hoverRating };

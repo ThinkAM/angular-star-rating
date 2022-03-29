@@ -2,21 +2,66 @@
     <div class="row">
         <div class="col content">
             <h3>Deixe uma avaliação</h3>
-            <h1>{{rating}}</h1>
-            <form [formGroup]="form" (submit)="onSubmit()">
+            <h1>{{humanize(rating.toFixed(2).toString())}}</h1>
+            <form id="userform" [formGroup]="form" (submit)="onSubmit()">
                 <star-rating-control [rating]="rating" size="large" formControlName="ratingInput"></star-rating-control>
                 <h5 *ngIf="ratings.length > 1">{{ratings.length}} avaliações</h5>
                 <h5 *ngIf="ratings.length === 1">{{ratings.length}} avaliação</h5>
 
-                <div class="comments">
+                <div *ngIf="commentsFeature" class="comments">
                     <span class="counter" *ngIf="comments.length > 1">{{comments.length}} Comentários</span>
                     <span class="counter" *ngIf="comments.length === 1">{{comments.length}} Comentário</span>
+                    <div *ngIf="countUserOnline" class="count-user-online">
+                        <label>{{countUserOnline}} ONLINE</label>
+                        <fa-icon [icon]="faCircle"></fa-icon>
+                    </div>
+                    <div class="sort">
+                        <select name="sort-by" id="sort-by">
+                            <option value="best">Melhor</option>
+                            <option value="recent">Recente</option>
+                            <option value="old">Antigo</option>
+                        </select>
+                        <img src="https://img.icons8.com/material-two-tone/24/000000/give-way.png" width="12" height="8">
+                    </div>
+
+                    <div class="comment">
+                        <textarea formControlName="commentInput" placeholder="Escreva seu comentário..." rows="4" name="comment" form="userform"></textarea>
+                        <div class="user-auth-actions">
+                            <a [routerLink]="">LOGIN</a>
+                            <a [routerLink]="">CADASTRE-SE</a>
+                        </div>    
+                    </div>
+
+                    <div class="users-comments">
+                        <div class="user-comment">
+                            <div class="avatar">
+                                <span>F</span>
+                            </div>
+                            <div class="info">
+                                <strong>Felipe A de Almeida</strong>
+                                <span>2 dias atrás</span>
+                            </div>
+                            <div class="description">
+                                <p>Textos</p>
+                            </div>
+                            <div class="actions">
+                                <div class="left">
+                                    <a [routerLink]="">Responder</a>
+                                    <a [routerLink]="">Compartilhar</a>
+                                </div>
+                                <div class="right">
+                                    <a [routerLink]=""><fa-icon [icon]="faThumbsUp"></fa-icon>0</a>
+                                    <a [routerLink]=""><fa-icon [icon]="faThumbsDown"></fa-icon>0</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="stock-inventory__buttons">
-                    <button type="submit" [disabled]="form.invalid">Submit</button>
+                <div *ngIf="logged" class="send-form">
+                    <button type="submit" [disabled]="form.invalid">Enviar</button>
                 </div>
-                <pre>{{ form.value | json }}</pre>
+                <pre *ngIf="debug">{{ form.value | json }}</pre>
             </form>
         </div>
     </div>

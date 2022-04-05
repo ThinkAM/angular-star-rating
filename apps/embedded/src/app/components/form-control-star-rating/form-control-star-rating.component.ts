@@ -32,6 +32,7 @@ export class FormControlStarRatingComponent implements OnInit {
   commentsFeature = false;
   id: string;
   entityName = 'Ratings';
+  clientUrl = location.href;
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +44,7 @@ export class FormControlStarRatingComponent implements OnInit {
   ngOnInit(): void {
     this.router.queryParams.subscribe(params => {
       if (params?.apiKey) {
+        this.clientUrl = params.url || this.clientUrl;
         const firebaseConfig = {
           apiKey: params.apiKey,
           authDomain: params.authDomain,
@@ -59,7 +61,7 @@ export class FormControlStarRatingComponent implements OnInit {
           apiVersion: 0
         });
         this.airtableService.base(params.baseId);
-        this.init();
+        this.init();        
       }
     });
   }
@@ -83,7 +85,7 @@ export class FormControlStarRatingComponent implements OnInit {
   init() {
     this.clientService.getClientIPAddress().subscribe((response) => {
       this.form.get('ip').setValue(response.ip);
-      this.form.get('url').setValue(location.href);
+      this.form.get('url').setValue(this.clientUrl);
       this.airtableService.getList(this.entityName, `AND(url='${this.url}', ip='${this.ip}')`, {
         field: 'ip',
         direction: 'asc'
@@ -100,7 +102,7 @@ export class FormControlStarRatingComponent implements OnInit {
       }).then((response: any) => {
         if (response.length) {
           this.ratings = response.map(item => item.fields);
-          this.rating = this.ratings.length ? this.ratings[0].average : 0;
+          this.rating = this.ratings?.length > 1 ? this.ratings[0].average : Number(this.ratings[0].sum);
         }
       });
     });
@@ -133,7 +135,8 @@ export class FormControlStarRatingComponent implements OnInit {
     }
 
     const sum = this.ratings.length > 0 ? this.calculeSum() : this.ratingInput;
-    this.rating = Math.round(sum / (this.ratings.length + 1));
+    const otherRatings = this.ratings.filter(prop => prop.ip !== this.ip);
+    this.rating = Math.round(sum / (otherRatings.length + 1));
 
     await this.airtableService.update(this.entityName, {
       rating: this.ratingInput,

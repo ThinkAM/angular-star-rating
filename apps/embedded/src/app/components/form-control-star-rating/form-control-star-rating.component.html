@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row">
         <div class="col content">
-            <h3>Deixe uma avaliação</h3>
-            <h1>{{humanize(rating.toFixed(2).toString())}}</h1>
+            <h5>Deixe uma avaliação</h5>
+            <h3>{{humanize(rating.toFixed(2).toString())}}</h3>
             <form id="userform" [formGroup]="form" (submit)="onSubmit()">
                 <star-rating-control [rating]="rating" size="large" formControlName="ratingInput"></star-rating-control>
-                <h5 *ngIf="ratings.length > 1">{{ratings.length}} avaliações</h5>
-                <h5 *ngIf="ratings.length === 1">{{ratings.length}} avaliação</h5>
+                <h6 *ngIf="ratings.length > 1">{{ratings.length}} avaliações</h6>
+                <h6 *ngIf="ratings.length === 1">{{ratings.length}} avaliação</h6>
 
                 <div *ngIf="commentsFeature" class="comments">
                     <span class="counter" *ngIf="comments.length > 1">{{comments.length}} Comentários</span>

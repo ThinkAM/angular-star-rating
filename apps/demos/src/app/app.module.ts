@@ -1,4 +1,3 @@
-import { StarRatingModule } from '@angular-star-rating-lib/angular-star-rating';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,6 +10,7 @@ import { PropertyBindingsComponent } from './components/property-bindings/proper
 import { StaticModuleModule } from './static-module/static-module.module';
 import { CustomStyleComponent } from './components/custom-style/custom-style.component';
 import { CustomStarsComponent } from './components/custom-stars/custom-stars.component';
+import { StarRatingModule } from '@angular-star-rating-lib/angular-star-rating';
 
 const DECLARATIONS = [
   AppComponent,

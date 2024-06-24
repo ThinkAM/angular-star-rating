@@ -1,31 +1,27 @@
-import { StarRatingModule } from '@angular-star-rating-lib/angular-star-rating';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { EventBindingsComponent } from './components/event-bindings/event-bindings.component';
 import { FormControlStarRatingComponent } from './components/form-control-star-rating/form-control-star-rating.component';
-import { PropertyBindingsComponent } from './components/property-bindings/property-bindings.component';
 import { StaticModuleModule } from './static-module/static-module.module';
-import { CustomStyleComponent } from './components/custom-style/custom-style.component';
-import { CustomStarsComponent } from './components/custom-stars/custom-stars.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { StarRatingModule } from 'angular-star-rating';
 
 const DECLARATIONS = [
   AppComponent,
-  PropertyBindingsComponent,
-  EventBindingsComponent,
-  FormControlStarRatingComponent,
-  CustomStyleComponent,
-  CustomStarsComponent,
+  FormControlStarRatingComponent
 ];
 @NgModule({
   imports: [
+    HttpClientModule,
     BrowserModule,
     ReactiveFormsModule,
     StarRatingModule.forRoot(),
     StaticModuleModule,
+    FontAwesomeModule,
     RouterModule.forRoot(
       [
         {
@@ -34,24 +30,8 @@ const DECLARATIONS = [
           pathMatch: 'full',
         },
         {
-          path: 'property-bindings',
-          component: PropertyBindingsComponent,
-        },
-        {
-          path: 'event-bindings',
-          component: EventBindingsComponent,
-        },
-        {
           path: 'form-control',
           component: FormControlStarRatingComponent,
-        },
-        {
-          path: 'custom-style',
-          component: CustomStyleComponent,
-        },
-        {
-          path: 'custom-stars',
-          component: CustomStarsComponent,
         },
         // static-config-override routes in its module
         {
